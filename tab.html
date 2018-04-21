@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>tab</title>
+		<style>
+			ul{
+				padding: 0;
+				margin:0;
+				list-style: none;
+				font-size: 0;
+			}
+			li{
+				display: inline-block;
+				font-size: 16px;
+				text-align: center;
+				border: 1px solid #666;
+			}
+			.tab{
+				width: 100px;
+				height: 30px;
+				line-height: 28px;
+				border-left: none;
+			}
+			.tab:hover{
+				cursor: pointer;
+			}
+			.tab:first-child{
+				border-left: 1px solid #666;
+			}
+			.content{
+				width: 403px;
+				height: 400px;
+				line-height: 398px;
+				display: none;
+			}
+			.tab-active{
+				background-color: red;
+			}
+			.content-active{
+				border-top: none;
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<ul id="tab">
+			<li class="tab tab-active">1</li>
+			<li class="tab">2</li>
+			<li class="tab">3</li>
+			<li class="tab">4</li>
+		</ul>
+		<ul>
+			<li class="content content-active">1</li>
+			<li class="content">2</li>
+			<li class="content">3</li>
+			<li class="content">4</li>
+		</ul>
+		<script>
+			addTabEvent('click')
+			// addTabEvent('mouseover')
+
+			function addTabEvent(type){
+				var tab = document.getElementById('tab');
+				var tabList = document.getElementsByClassName('tab');
+				var contentList = document.getElementsByClassName('content');
+				var timer = null;
+				if(tab.attachEvent){
+					tab.attachEvent('on'+type,function(){
+						tabEvent.call(tab)
+					})
+				}else{
+					if(type == "mouseover"){
+						tab.addEventListener(type,tabEvent,false)
+						tab.addEventListener('mouseout',tabEventMouseout,false)
+					}else{
+						tab.addEventListener(type,tabEvent,false)
+					}
+				}
+
+				function tabEvent(e){
+					var event = e || window.event;
+					var tabTarget = event.srcElement || event.target;
+					if(tabTarget.tagName.toLowerCase() !== 'li')
+						return;
+					var index = [].indexOf.call(tabList,tabTarget);
+					if(event.type == 'mouseover'){
+						timer = setTimeout(function(){
+							for(var i=0;i<tabList.length;i++){
+								tabList[i].classList.remove('tab-active');
+								contentList[i].classList.remove('content-active');
+							}
+							tabTarget.classList.add('tab-active');
+							contentList[index].classList.add('content-active');
+						},100)
+					}else{
+						for(var i=0;i<tabList.length;i++){
+							tabList[i].classList.remove('tab-active');
+							contentList[i].classList.remove('content-active');
+						}
+						tabTarget.classList.add('tab-active');
+						contentList[index].classList.add('content-active');
+					}
+				}
+
+				function tabEventMouseout(e){
+					var event = e || window.event;
+					var tabTarget = event.srcElement || event.target;
+					if(tabTarget.tagName.toLowerCase() !== 'li')
+						return;
+					clearTimeout(timer)
+				}
+			}
+
+		</script>
+	</body>
+</html>
