@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>tab</title>
+		<style></style>
+	</head>
+	<body>
+		<script>
+		// function Person(name, age){
+		// 	this.name = name;
+		// 	this.age = age;
+		// 	// this.showInfo = function(){
+		// 	// 	return '这个人的名字是：'+ this.name + " ,年龄是：" + this.age + "。";
+		// 	// }
+		// }
+
+		// Person.prototype.showInfo = function(){
+		// 	return '这个人的名字是：'+ this.name + " ,年龄是：" + this.age + "。";
+		// }
+		// function Students(name, age, grade){
+		// 	Person.call(this, name, age);
+		// 	// this.grade = grade;
+		// }
+		// Students.prototype = Person.prototype;
+
+		// Students.prototype.showInfo = function(){
+		// 	return '学生的名字是：'+ this.name + " ,年龄是：" + this.age + "。";
+		// }
+		// var haha1 = new Person('haha', 23)
+
+		// var haha = new Students('haha', 23)
+
+		// alert(haha.showInfo())
+		// alert(haha1.showInfo())
+
+		// function Father(name, age){
+		// 	this.name = name;
+		// 	this.age = age;
+		// }
+		// Father.prototype.showMessage = function(){
+		// 	return "father name is "+ this.name + ",this age is" + this.age;
+		// }
+
+		// function Son(name, age){
+		// 	Father.call(this, name, age)
+		// }
+
+		// var inherit = (function(){
+		// 	var Fn = new Function();
+		// 	return function(target, origin){
+		// 		Fn.prototype = origin.prototype;
+		// 		target.prototype = new Fn();
+		// 		target.prototype.constructor = target;
+		// 	}
+		// })()
+
+		// inherit(Son, Father)
+
+		// Son.prototype.showName = function(){
+		// 	return this.name;
+		// }
+
+
+		// alert(new Son('haha', 12).showMessage())
+		// alert(new Son('haha', 12).showName())
+
+
+		var imgURLs = ['https://static.bootcss.com/www/assets/img/webpack.png?1524067949343','https://static.bootcss.com/www/assets/img/typescript.png?1524067949343','https://static.bootcss.com/www/assts/img/luffycity.jpg','https://static.bootcss.com/www/assets/img/react.png?1524067949343'];
+		var cimg = [];
+		var promises = imgURLs.map(function(item, index){
+			var promise = new Promise(function(resolve, reject){
+				cimg[index] = new Image();
+				cimg[index].src = item;
+				cimg[index].onload = function(){
+					resolve(cimg[index])
+				};
+				cimg[index].onerror = function(){
+					reject(new Error('图片下载失败'))
+				}
+			})
+			return promise;
+		})
+		Promise.all(promises).then(function(res){
+			res.forEach(function(item){
+				document.body.appendChild(item)
+			})
+		}).then(function(){
+
+		}).catch(function(e){
+			console.log(e)
+		})
+
+			// var promise = new Promise(function(resolve, reject){
+			// 	var cimg = new Image();
+			// 	cimg.src = 'https://static.bootcss.com/www/assets/img/webpack.png?1524067949343';
+			// 	cimg.onload = function(){
+			// 		resolve(cimg)
+			// 	};
+			// 	cimg.onerror = function(){
+			// 		reject(new Error('图片下载失败'))
+			// 	}
+			// })
+
+			// promise.then(function(res){
+			// 	document.body.appendChild(res)
+			// }).catch(function(er){
+			// 	console.log(er)
+			// })
+
+
+
+
+
+
+		// function objchangestring(obj){
+		// 	var arr = [];
+		// 	for(var i in obj){
+		// 		arr.push(i + '=' + obj[i])
+		// 	}
+		// 	return arr.join('&');
+		// }
+
+		// function ajax(options){
+		// 	options.type = options.type || 'get'; //默认请求方式为 get
+		// 	if(!options.async){
+		// 		options.async = false;
+		// 	}else{
+		// 		options.async = true;
+		// 	}
+		// 	options.data = options.data || ''; //允许数据为空
+
+		// 	if(typeof options.data == 'object' && typeof options.data != 'number'){
+		// 		options.data = objchangestring(options.data)
+		// 	}else{
+		// 		if(typeof options.data == 'string'){
+		// 			options.data = options.data;
+		// 		}else{
+		// 			throw new Error('数据格式错误，请重新输入！')
+		// 		}
+		// 	}
+
+		// 	//获取ajax核心对象xmlhttprequest
+		// 	var ajax = null;
+		// 	try{
+		// 		ajax =  new XMLHttpRequest();
+		// 	}catch(e){
+		// 		ajax = new ActiveXobject('Microsoft.XMLHTTP')
+		// 	}
+
+		// 	//打开方式(打开方式，接口地址，是否异步)
+		// 	if(options.type == 'get' && options.data){
+		// 		options.url += '?' + options.data
+		// 	}
+
+		// 	ajax.open(options.type, options.url, options.async)
+
+		// 	if(options.type == 'get' && options.data){
+		// 		ajax.send();
+		// 	}else{
+		// 		ajax.setRequestHeader('content-type','application/x-www-form-urlencoded');
+		// 		ajax.send(options.data);
+		// 	}
+
+		// 	if(!options.async){
+		// 		options.success && options.success(ajax.responseText)
+		// 	}else{
+		// 		ajax.onreadystatechange = function(){
+		// 			if(ajax.readyState == 4){
+		// 				if(ajax.status == 200){
+		// 					options.success && options.success(ajax.responseText)
+		// 				}else{
+		// 					options.error && options.error(ajax.status)
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+
+		</script>
+	</body>
+</html>
